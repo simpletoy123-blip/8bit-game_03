@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Robot Game</title>
+<style>
+  body {
+    margin: 0;
+    background: #111;
+    color: white;
+    text-align: center;
+    font-family: monospace;
+  }
+
+  #game {
+    padding-top: 50px;
+  }
+
+  button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  img {
+    width: 128px;
+    image-rendering: pixelated;
+    margin: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div id="game"></div>
+
+<script>
+let state = "title";
+
+function render() {
+  const game = document.getElementById("game");
+
+  // TITLE
+  if (state === "title") {
+    game.innerHTML = `
+      <h1>🤖 ROBOT GAME</h1>
+      <button onclick="startGame()">START</button>
+    `;
+  }
+
+  // MENU
+  if (state === "menu") {
+    game.innerHTML = `
+      <h2>MAIN MENU</h2>
+
+      <div>
+        <img src="player.png">
+        <img src="player.png">
+      </div>
+
+      <button onclick="goUpgrade()">UPGRADE</button>
+      <button onclick="goBattle()">FIGHT</button>
+    `;
+  }
+
+  // UPGRADE
+  if (state === "upgrade") {
+    game.innerHTML = `
+      <h2>🔬 LAB UPGRADE</h2>
+      <p>(ยังไม่ทำระบบ)</p>
+      <button onclick="goMenu()">BACK</button>
+    `;
+  }
+
+  // BATTLE
+  if (state === "battle") {
+    game.innerHTML = `
+      <h2>⚔️ BATTLE</h2>
+      <p>(ยังไม่ทำระบบต่อสู้)</p>
+      <button onclick="goMenu()">BACK</button>
+    `;
+  }
+}
+
+function startGame() {
+  state = "menu";
+  render();
+}
+
+function goMenu() {
+  state = "menu";
+  render();
+}
+
+function goUpgrade() {
+  state = "upgrade";
+  render();
+}
+
+function goBattle() {
+  state = "battle";
+  render();
+}
+
+// start
+render();
+</script>
+
+</body>
+</html>
