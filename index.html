@@ -12,10 +12,20 @@
     font-family: monospace;
   }
 
+  img {
+    width: 100px;
+    cursor: pointer;
+    border: 2px solid white;
+  }
+
+  .robot {
+    display: inline-block;
+    margin: 10px;
+  }
+
   button {
-    margin: 5px;
+    margin: 10px;
     padding: 10px;
-    font-size: 16px;
   }
 </style>
 </head>
@@ -26,28 +36,26 @@
 <div id="menu">
   <h1>ROBOT SELECT</h1>
 
-  <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
-
-    <div onclick="selectRobot('GM CARDBOARD')">
-      <img src="https://via.placeholder.com/100?text=GM" />
+  <div>
+    <div class="robot" onclick="selectRobot('GM CARDBOARD')">
+      <img src="https://picsum.photos/100?random=1">
       <p>GM CARDBOARD</p>
     </div>
 
-    <div onclick="selectRobot('RED TIGER')">
-      <img src="https://via.placeholder.com/100?text=RED" />
+    <div class="robot" onclick="selectRobot('RED TIGER')">
+      <img src="https://picsum.photos/100?random=2">
       <p>RED TIGER</p>
     </div>
 
-    <div onclick="selectRobot('GREEN GOLEM')">
-      <img src="https://via.placeholder.com/100?text=GOLEM" />
+    <div class="robot" onclick="selectRobot('GREEN GOLEM')">
+      <img src="https://picsum.photos/100?random=3">
       <p>GREEN GOLEM</p>
     </div>
 
-    <div onclick="selectRobot('BLUE KNIGHT')">
-      <img src="https://via.placeholder.com/100?text=KNIGHT" />
+    <div class="robot" onclick="selectRobot('BLUE KNIGHT')">
+      <img src="https://picsum.photos/100?random=4">
       <p>BLUE KNIGHT</p>
     </div>
-
   </div>
 
   <p id="selected">Selected: NONE</p>
@@ -107,7 +115,7 @@ function attack() {
 
 function defend() {
   document.getElementById("battleLog").innerText =
-    "You defended! Reduced damage!";
+    "You defended!";
   
   enemyTurn(true);
   updateHP();
@@ -116,9 +124,7 @@ function defend() {
 function enemyTurn(defending = false) {
   let damage = Math.floor(Math.random() * 15) + 5;
 
-  if (defending) {
-    damage = Math.floor(damage / 2);
-  }
+  if (defending) damage = Math.floor(damage / 2);
 
   playerHP -= damage;
 }
