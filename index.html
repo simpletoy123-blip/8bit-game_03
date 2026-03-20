@@ -2,108 +2,125 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Robot Game</title>
+<title>Robot Battle</title>
+
 <style>
   body {
-    margin: 0;
     background: #111;
     color: white;
     text-align: center;
     font-family: monospace;
   }
 
-  #game {
-    padding-top: 50px;
-  }
-
   button {
-    margin: 10px;
-    padding: 10px 20px;
+    margin: 5px;
+    padding: 10px;
     font-size: 16px;
-    cursor: pointer;
-  }
-
-  img {
-    width: 128px;
-    image-rendering: pixelated;
-    margin: 10px;
   }
 </style>
 </head>
+
 <body>
 
-<div id="game"></div>
+<!-- ===== MENU ===== -->
+<div id="menu">
+  <h1>ROBOT SELECT</h1>
+
+  <button onclick="selectRobot('GM CARDBOARD')">GM CARDBOARD</button>
+  <button onclick="selectRobot('RED TIGER')">RED TIGER</button>
+  <button onclick="selectRobot('GREEN GOLEM')">GREEN GOLEM</button>
+  <button onclick="selectRobot('BLUE KNIGHT')">BLUE KNIGHT</button>
+
+  <p id="selected">Selected: NONE</p>
+
+  <button onclick="startGame()">START GAME</button>
+</div>
+
+<!-- ===== BATTLE ===== -->
+<div id="battle" style="display:none;">
+  <h2>BATTLE MODE</h2>
+
+  <p id="playerRobot"></p>
+  <p id="enemyRobot"></p>
+
+  <button onclick="attack()">⚔️ Attack</button>
+  <button onclick="defend()">🛡️ Defend</button>
+
+  <p id="battleLog"></p>
+</div>
 
 <script>
-let state = "title";
+let selectedRobot = "";
+let playerHP = 100;
+let enemyHP = 100;
 
-function render() {
-  const game = document.getElementById("game");
-
-  // TITLE
-  if (state === "title") {
-    game.innerHTML = `
-      <h1>🤖 ROBOT GAME</h1>
-      <button onclick="startGame()">START</button>
-    `;
-  }
-
-  // MENU
-  if (state === "menu") {
-    game.innerHTML = `
-      <h2>MAIN MENU</h2>
-
-      <div>
-        <img src="player.png">
-        <img src="player.png">
-      </div>
-
-      <button onclick="goUpgrade()">UPGRADE</button>
-      <button onclick="goBattle()">FIGHT</button>
-    `;
-  }
-
-  // UPGRADE
-  if (state === "upgrade") {
-    game.innerHTML = `
-      <h2>🔬 LAB UPGRADE</h2>
-      <p>(ยังไม่ทำระบบ)</p>
-      <button onclick="goMenu()">BACK</button>
-    `;
-  }
-
-  // BATTLE
-  if (state === "battle") {
-    game.innerHTML = `
-      <h2>⚔️ BATTLE</h2>
-      <p>(ยังไม่ทำระบบต่อสู้)</p>
-      <button onclick="goMenu()">BACK</button>
-    `;
-  }
+function selectRobot(name) {
+  selectedRobot = name;
+  document.getElementById("selected").innerText = "Selected: " + name;
 }
 
 function startGame() {
-  state = "menu";
-  render();
+  if (selectedRobot === "") {
+    alert("Please select a robot first!");
+    return;
+  }
+
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("battle").style.display = "block";
+
+  document.getElementById("playerRobot").innerText =
+    "Your Robot: " + selectedRobot + " HP: " + playerHP;
+
+  document.getElementById("enemyRobot").innerText =
+    "Enemy: GREEN GOLEM HP: " + enemyHP;
 }
 
-function goMenu() {
-  state = "menu";
-  render();
+function attack() {
+  let damage = Math.floor(Math.random() * 20) + 5;
+  enemyHP -= damage;
+
+  document.getElementById("battleLog").innerText =
+    "You dealt " + damage + " damage!";
+
+  enemyTurn();
+  updateHP();
 }
 
-function goUpgrade() {
-  state = "upgrade";
-  render();
+function defend() {
+  document.getElementById("battleLog").innerText =
+    "You defended! Reduced damage!";
+  
+  enemyTurn(true);
+  updateHP();
 }
 
-function goBattle() {
-  state = "battle";
-  render();
+function enemyTurn(defending = false) {
+  let damage = Math.floor(Math.random() * 15) + 5;
+
+  if (defending) {
+    damage = Math.floor(damage / 2);
+  }
+
+  playerHP -= damage;
 }
 
-// start
-render();
+function updateHP() {
+  document.getElementById("playerRobot").innerText =
+    "Your Robot: " + selectedRobot + " HP: " + playerHP;
+
+  document.getElementById("enemyRobot").innerText =
+    "Enemy: GREEN GOLEM HP: " + enemyHP;
+
+  if (playerHP <= 0) {
+    alert("YOU LOSE");
+    location.reload();
+  }
+
+  if (enemyHP <= 0) {
+    alert("YOU WIN");
+    location.reload();
+  }
+}
 </script>
 
 </body>
