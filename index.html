@@ -26,10 +26,29 @@
 <div id="menu">
   <h1>ROBOT SELECT</h1>
 
-  <button onclick="selectRobot('GM CARDBOARD')">GM CARDBOARD</button>
-  <button onclick="selectRobot('RED TIGER')">RED TIGER</button>
-  <button onclick="selectRobot('GREEN GOLEM')">GREEN GOLEM</button>
-  <button onclick="selectRobot('BLUE KNIGHT')">BLUE KNIGHT</button>
+  <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+
+    <div onclick="selectRobot('GM CARDBOARD')">
+      <img src="https://via.placeholder.com/100?text=GM" />
+      <p>GM CARDBOARD</p>
+    </div>
+
+    <div onclick="selectRobot('RED TIGER')">
+      <img src="https://via.placeholder.com/100?text=RED" />
+      <p>RED TIGER</p>
+    </div>
+
+    <div onclick="selectRobot('GREEN GOLEM')">
+      <img src="https://via.placeholder.com/100?text=GOLEM" />
+      <p>GREEN GOLEM</p>
+    </div>
+
+    <div onclick="selectRobot('BLUE KNIGHT')">
+      <img src="https://via.placeholder.com/100?text=KNIGHT" />
+      <p>BLUE KNIGHT</p>
+    </div>
+
+  </div>
 
   <p id="selected">Selected: NONE</p>
 
